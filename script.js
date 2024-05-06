@@ -86,6 +86,7 @@ function startGame () {
     }
 }
 
+//display current state of the game
 function drawBoard () {
     console.log(" ");
     console.log(' ' + (Gameboard.gameboard[0][0] || ' ') + " | " + (Gameboard.gameboard[0][1] || '  ') + " | " + (Gameboard.gameboard[0][2] || '  '));
@@ -114,13 +115,16 @@ function checkWin(player) {
 
 //tie function
 function tie() {
+    //iterating over each cell of the game board
     for (let i = 0; i < Gameboard.gameboard.length; i++) {
         for (let j = 0; j < Gameboard.gameboard.length; j++) {
+            //if any cells are still empty return false, not tie
             if (Gameboard.gameboard[i][j] === '') {
                 return false;
             }
         }
     }
+    //if it completes iteration w/o finding any empty cell return true, tie
     return true;
 }
 
