@@ -30,11 +30,87 @@ var winningCombinations = [
     [[0, 2], [1, 1], [2, 0]]
 ];
 
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("addplayerNames");
+var span = document.getElementById("close");
+var cancel = document.getElementById("cancel");
+var submit = document.getElementById("submit");
+
+function openModal () {
+    modal.style.display = "block";
+}
+
+function closeModal () {
+    modal.style.display = "none";
+}
+
+btn.onclick = openModal;
+span.onclick = closeModal;
+cancel.onclick = closeModal;
+submit.onclick = submitInfo;
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function displayOnPage () {
+    var displayNameContainer = document.querySelector(".displayName");
+
+    //clear existing content
+    displayNameContainer.innerHTML = "";
+
+    var names = document.createElement("div");
+    names.className = "names";
+
+    var playerOneContainer = document.createElement("div");
+    playerOneContainer.className = "playerOneContainer";
+
+    var player_one = document.createElement("h6");
+    player_one.textContent = `Player One: ${playerOne.name}`;
+
+    var playerTwoContainer = document.createElement("div");
+    playerTwoContainer.className = "playerTwoContainer";
+
+    var player_two = document.createElement("h6");
+    player_two.textContent = `Player Two: ${playerTwo.name}`;
+
+    names.append(playerOneContainer);
+    playerOneContainer.append(player_one);
+    names.append(playerTwoContainer);
+    playerTwoContainer.append(player_two);
+    displayNameContainer.append(names);
+}
+
+function submitInfo() {
+    const playerOneName = document.getElementById("playerOne").value;
+    const playerTwoName = document.getElementById("playerTwo").value;
+
+    if (playerOneName && playerTwoName) {
+        playerOne.name = playerOneName;
+        playerTwo.name = playerTwoName;
+        displayOnPage();
+        closeModal();
+    } else {
+        alert("Please enter names for both players.");
+    }
+
+    //clear input fields
+    document.getElementById("playerOne").value = "";
+    document.getElementById("playerTwo").value = "";
+}
+
+//have a start game button
+
 function startGame () {
+
     //ask user for player 1
-    playerOne.name = prompt("Enter a name for player 1");
+
+    //playerOne.name = prompt("Enter a name for player 1");
     //ask user for player 2
-    playerTwo.name = prompt("Enter a name for player 2");
+    //playerTwo.name = prompt("Enter a name for player 2");
 
     //start game
     while (true) {
@@ -127,5 +203,3 @@ function tie() {
     //if it completes iteration w/o finding any empty cell return true, tie
     return true;
 }
-
-startGame ();

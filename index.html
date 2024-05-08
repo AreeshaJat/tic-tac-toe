@@ -7,19 +7,29 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to Tic-Tac-Toe</h1>
+    <div class="title">
+        <h1>Welcome to Tic-Tac-Toe</h1>
+        <button id="addplayerNames">Add Player Names</button>
+    </div>
+    <div class="displayName"></div>
     <div class="gameboard">
-        <div class="playerNames">
-            <form>
-                <label for="playerOne">Player One:</label>
-                <input type="text" id="playerOne" name="playerOne">
-            </form>
-            <form>
-                <label for="playerTwo">Player Two:</label>
-                <input type="text" id="playerTwo" name="playerTwo">
-            </form>
-            <p id="winner"></p>
-            <p id="playerTurn"></p>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span id="close">&times;</span>
+                <p>Please type player names</p>
+                <form>
+                    <label for="playerOne">Player One:</label>
+                    <input type="text" id="playerOne" name="playerOne">
+                </form>
+                <form>
+                    <label for="playerTwo">Player Two:</label>
+                    <input type="text" id="playerTwo" name="playerTwo">
+                </form>
+                <div class="modal-buttons">
+                    <button id="submit">Submit</button>
+                    <button id="cancel">Cancel</button>
+                </div>
+            </div>
         </div>
         <div id="grid">
             <div class="cell" id="one"></div>
