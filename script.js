@@ -4,7 +4,7 @@ const Gameboard = {
         ["", "", ""],
         ["", "", ""]
     ]
-};
+}; 
 
 const playerOne = {
     name: "Player One",
@@ -88,6 +88,7 @@ function submitInfo() {
     const playerOneName = document.getElementById("playerOne").value;
     const playerTwoName = document.getElementById("playerTwo").value;
 
+    //if playerOneName and playerTwoName are not empty or null
     if (playerOneName && playerTwoName) {
         playerOne.name = playerOneName;
         playerTwo.name = playerTwoName;
@@ -102,76 +103,81 @@ function submitInfo() {
     document.getElementById("playerTwo").value = "";
 }
 
-//have a start game button
+document.querySelectorAll('.cell').forEach(cell => {
+    //set to false so that when the player clicks on a cell, the 
+    //cellClickHandler is called during the bubbling phase(after 
+    //reaching the target)
+    cell.addEventListener('click', cellClickHandler, false); 
+});
 
-function startGame () {
+function cellClickHandler(event) {
+    const clickedCell = event.target;
+    const clickedRow = parseInt(clickedCell.dataset.row); //get row number
+    const clickedCol = parseInt(clickedCell.dataset.col); //get column number
 
-    //ask user for player 1
+    //if cell is not empty or game has not started or is finished
+    if (Gameboard.gameboard[clickedRow][clickedCol] !== "" || !gameActive) {
+        return;
+    }
 
-    //playerOne.name = prompt("Enter a name for player 1");
-    //ask user for player 2
-    //playerTwo.name = prompt("Enter a name for player 2");
+    //sets the player's symbol to the specific row and column on the game board 
+    //and then updates the UI to reflect this change
+    Gameboard.gameboard[clickedRow][clickedCol] = currentPlayer.symbol;
+    updateUI();
+    if (checkWin(currentPlayer)) {
+        endGame(currentPlayer.name + " won the game!");
+        return;
+    }
+    if (tie()) {
+        endGame("It's a tie!");
+        return;
+    }
 
-    //start game
-    while (true) {
-        drawBoard();
-        let player;
-        if (currentPlayer === playerOne) {
-            player = playerOne;
-        } else {
-            player = playerTwo;
-        }
+    //if no win/tie then switch player
+    switchPlayer();
+}
 
-        let symbol = currentPlayer.symbol;
-        let playerName = currentPlayer.name;
+function updateUI() {
+    for (let i = 0; i < Gameboard.gameboard.length; i++) {
+        for (let j = 0; j < Gameboard.gameboard[i].length; j++) {
 
-        //ask player 1 to pick an area on grid for x then
-        //ask player 2 to pick an area on grid for o
-        let move = prompt(""+playerName+" Enter a number between 1-9 to place your "+symbol+"");
-
-        //translates the user input string to int and then subtracts 1 since arrays are 0-8
-        let position = parseInt(move) - 1;
-
-        //checks if position variable is not a number, or less than 1, or greater than 9, or if the position is not already filled 
-        //Math.floor(position / 3) to get row index and position % 3 to get column index
-        if (isNaN(position) || position < 0 || position > 8 || Gameboard.gameboard[Math.floor(position / 3)][position % 3] !== "") {
-            console.log("Invalid move. Try again.");
-            continue;
-        }
-
-        //update gameboard
-        Gameboard.gameboard[Math.floor(position / 3)][position % 3] = symbol;
-
-        if(checkWin(currentPlayer)) {
-            drawBoard();
-            console.log(""+playerName+" won the game");
-            break;
-        }
-
-        if (tie()) {
-            drawBoard();
-            console.log("It's a tie");
-            break;
-        }
-
-        if (currentPlayer === playerOne) {
-            currentPlayer = playerTwo;
-        } else {
-            currentPlayer = playerOne;
+            //selects the cell of the game being iterated over and also querySelector finds 
+            //an element with `data-row` and `data-col` arrtibutes that match the current
+            //row `i` and column `j`
+            const cell = document.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+            //sets the selected cell to the value stores in gameboard array
+            cell.textContent = Gameboard.gameboard[i][j];
         }
     }
 }
 
-//display current state of the game
-function drawBoard () {
-    console.log(" ");
-    console.log(' ' + (Gameboard.gameboard[0][0] || ' ') + " | " + (Gameboard.gameboard[0][1] || '  ') + " | " + (Gameboard.gameboard[0][2] || '  '));
-    console.log("---------------");
-    console.log(' ' + (Gameboard.gameboard[1][0] || ' ') + " | " + (Gameboard.gameboard[1][1] || '  ') + " | " + (Gameboard.gameboard[1][2] || '  '));
-    console.log("---------------");
-    console.log(' ' + (Gameboard.gameboard[2][0] || ' ') + " | " + (Gameboard.gameboard[2][1] || '  ') + " | " + (Gameboard.gameboard[2][2] || '  '));
-    console.log(" ");
+function switchPlayer() {
+    if (currentPlayer === playerOne) {
+        currentPlayer = playerTwo;
+    } else {
+        currentPlayer = playerOne;
+    }
 }
+
+function endGame(message) {
+    alert(message);
+    gameActive = false;
+}
+
+function startGame () {
+    //resets the grid
+    Gameboard.gameboard = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+    ];
+    currentPlayer = playerOne;
+    gameActive = true;
+    updateUI();
+}
+
+document.getElementById('startGame').addEventListener('click', startGame);
+document.getElementById('restart').addEventListener('click', startGame);
 
 //win function
 function checkWin(player) {

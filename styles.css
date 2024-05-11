@@ -28,9 +28,7 @@ h1 {
 }
 
 #addplayerNames {
-    /*margin: 20px 0;*/
     margin-left: 20px;
-    /*padding: 0px 5px;*/
     border-radius: 10px;
     background-color: #0ea5e9;
     color: white;
@@ -123,8 +121,8 @@ h1 {
     /*margin-top: 20px;*/
     margin: 0;
     display: grid;
-    grid-template-rows: 150px 150px 150px;
-    grid-template-columns: 150px 150px 150px;
+    grid-template-rows: 160px 160px 160px;
+    grid-template-columns: 160px 160px 160px;
 }
 
 .cell {
@@ -133,5 +131,31 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #AAA;
+    color: black;
+}
+
+.bottomButton {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#startGame {
+    border-radius: 10px;
+    background-color: #0ea5e9;
+    color: white;
+    width: 8vw;
+    height: 7vh;
+    border: 1px solid #0ea5e9;
+}
+
+#restart {
+    border-radius: 10px;
+    background-color: #0ea5e9;
+    color: white;
+    width: 8vw;
+    height: 7vh;
+    border: 1px solid #0ea5e9;
 }
