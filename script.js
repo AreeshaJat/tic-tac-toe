@@ -69,13 +69,13 @@ function displayOnPage () {
     playerOneContainer.className = "playerOneContainer";
 
     var player_one = document.createElement("h6");
-    player_one.textContent = `Player One: ${playerOne.name}`;
+    player_one.innerHTML = `Player One: ${playerOne.name}<br>Symbol: X`;
 
     var playerTwoContainer = document.createElement("div");
     playerTwoContainer.className = "playerTwoContainer";
 
     var player_two = document.createElement("h6");
-    player_two.textContent = `Player Two: ${playerTwo.name}`;
+    player_two.innerHTML = `Player Two: ${playerTwo.name}<br>Symbol: O`;
 
     names.append(playerOneContainer);
     playerOneContainer.append(player_one);
@@ -125,7 +125,7 @@ function cellClickHandler(event) {
     Gameboard.gameboard[clickedRow][clickedCol] = currentPlayer.symbol;
     updateUI();
     if (checkWin(currentPlayer)) {
-        endGame(currentPlayer.name + " won the game!");
+        endGame(currentPlayer.name + " won the game 🏆🥇🎊!");
         return;
     }
     if (tie()) {
@@ -152,15 +152,19 @@ function updateUI() {
 }
 
 function switchPlayer() {
+    let turn = document.getElementById('turn');
     if (currentPlayer === playerOne) {
         currentPlayer = playerTwo;
+        turn.textContent = `Current Player's Turn: ${playerOne.name}`;
     } else {
         currentPlayer = playerOne;
+        turn.textContent = `Current Player's Turn: ${playerTwo.name}`;
     }
 }
 
 function endGame(message) {
-    alert(message);
+    document.getElementById('winner').innerHTML = "Game Over" + " " + message;
+    document.getElementById('restartMessage').innerHTML = "Press Start Game button to play again";
     gameActive = false;
 }
 
@@ -177,7 +181,6 @@ function startGame () {
 }
 
 document.getElementById('startGame').addEventListener('click', startGame);
-document.getElementById('restart').addEventListener('click', startGame);
 
 //win function
 function checkWin(player) {
