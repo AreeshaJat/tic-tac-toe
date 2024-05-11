@@ -155,10 +155,10 @@ function switchPlayer() {
     let turn = document.getElementById('turn');
     if (currentPlayer === playerOne) {
         currentPlayer = playerTwo;
-        turn.textContent = `Current Player's Turn: ${playerOne.name}`;
+        turn.textContent = `Current Player's Turn: ${playerTwo.name}`;
     } else {
         currentPlayer = playerOne;
-        turn.textContent = `Current Player's Turn: ${playerTwo.name}`;
+        turn.textContent = `Current Player's Turn: ${playerOne.name}`;
     }
 }
 
