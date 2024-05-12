@@ -22,3 +22,7 @@ The project is based on the development of a responsive and interactive web page
 
 ## Viewing the Webpage
 To view the completed webpage, follow this link: [Live Demo](https://areeshajat.github.io/tic-tac-toe/)
+
+
+https://github.com/AreeshaJat/tic-tac-toe/assets/106934155/4a1db528-a51b-40ad-bbd5-35cd7e3fa816
+
